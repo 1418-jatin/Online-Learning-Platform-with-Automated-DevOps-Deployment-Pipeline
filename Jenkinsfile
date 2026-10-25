@@ -36,7 +36,7 @@ pipeline {
                             docker pull $IMAGE_NAME:$IMAGE_TAG &&
                             (docker stop prt-app || true) &&
                             (docker rm prt-app || true) &&
-                            docker run -d --name prt-app -p 8000:8000 $IMAGE_NAME:$IMAGE_TAG
+                            docker run -d --name prt-app -p 8000:80 $IMAGE_NAME:$IMAGE_TAG
                         "
                     done
                     '''
