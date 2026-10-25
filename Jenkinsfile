@@ -36,7 +36,13 @@ pipeline {
                             docker pull $IMAGE_NAME:$IMAGE_TAG &&
                             (docker stop prt-app || true) &&
                             (docker rm prt-app || true) &&
-                            docker run -d --name prt-app -p 8000:80 $IMAGE_NAME:$IMAGE_TAG
+                            docker run -d --name prt-app \
+                              -e DB_HOST=3.145.56.120 \
+                              -e DB_USER=olp_user \
+                              -e DB_PASS=admin \
+                              -e DB_NAME=olp_db \
+                              -p 8000:80 \
+                              $IMAGE_NAME:$IMAGE_TAG
                         "
                     done
                     '''
@@ -50,16 +56,13 @@ pipeline {
                     sh '''
                     for HOST in 3.142.241.187 3.148.215.92; do
                         ssh -i $SSH_KEY -o StrictHostKeyChecking=no ubuntu@$HOST "
-                            docker ps | grep prt-app || true
+                            docker ps -a | grep prt-app &&
+                            docker exec prt-app env | grep DB_
                         "
                     done
                     '''
                 }
             }
         }
-    }
-
-    post {
-        always { sh 'docker logout' }
     }
 }
