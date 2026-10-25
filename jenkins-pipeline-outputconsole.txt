@@ -1,0 +1,214 @@
+Started by user Jatin Bisht
+Obtained Jenkinsfile from git https://github.com/1418-jatin/Online-Learning-Platform-with-Automated-DevOps-Deployment-Pipeline.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/PRT-website1
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential dockerhub-cred
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/PRT-website1/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/1418-jatin/Online-Learning-Platform-with-Automated-DevOps-Deployment-Pipeline.git # timeout=10
+Fetching upstream changes from https://github.com/1418-jatin/Online-Learning-Platform-with-Automated-DevOps-Deployment-Pipeline.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.53.0'
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --force --progress -- https://github.com/1418-jatin/Online-Learning-Platform-with-Automated-DevOps-Deployment-Pipeline.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 8e0b355e09f688338e263d6963b12801d1a4a521 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 8e0b355e09f688338e263d6963b12801d1a4a521 # timeout=10
+Commit message: "Update Jenkinsfile"
+ > git rev-list --no-walk 6331b8e666d09e4db523b5e19feac88fdd313b8b # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $DOCKERHUB_CRED or $DOCKERHUB_CRED_PSW
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential dockerhub-cred
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/PRT-website1/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/1418-jatin/Online-Learning-Platform-with-Automated-DevOps-Deployment-Pipeline.git # timeout=10
+Fetching upstream changes from https://github.com/1418-jatin/Online-Learning-Platform-with-Automated-DevOps-Deployment-Pipeline.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.53.0'
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --force --progress -- https://github.com/1418-jatin/Online-Learning-Platform-with-Automated-DevOps-Deployment-Pipeline.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 8e0b355e09f688338e263d6963b12801d1a4a521 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 8e0b355e09f688338e263d6963b12801d1a4a521 # timeout=10
+Commit message: "Update Jenkinsfile"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker Image)
+[Pipeline] sh
++ docker build --no-cache -t 19901418/prt-oct-25th:latest .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 139B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/nginx:alpine
+#2 DONE 0.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 32B done
+#4 DONE 0.0s
+
+#5 [1/2] FROM docker.io/library/nginx:alpine@sha256:a3554c0d0b48177b1413c26e01f695334428020d9df01243fbae3e11cfd17417
+#5 resolve docker.io/library/nginx:alpine@sha256:a3554c0d0b48177b1413c26e01f695334428020d9df01243fbae3e11cfd17417 0.0s done
+#5 CACHED
+
+#6 [2/2] COPY index.html /usr/share/nginx/html/
+#6 DONE 0.0s
+
+#7 exporting to image
+#7 exporting layers 0.1s done
+#7 exporting manifest sha256:4ed0cacecc4fced2ca1ed07e8b19ce6bb33cd73d80d4e880704783f0578739f6
+#7 exporting manifest sha256:4ed0cacecc4fced2ca1ed07e8b19ce6bb33cd73d80d4e880704783f0578739f6 0.0s done
+#7 exporting config sha256:31b9a5b94be514bcfd14527a428d43c07b93f4067a3a8e51c3af7e2f30aeae43 0.0s done
+#7 exporting attestation manifest sha256:758821292532fd085d04088fd33f3ac354f1f87ff0f85a9e9b59e645365b359a 0.0s done
+#7 exporting manifest list sha256:93a91b83366342170b43f5e34679bea8909c92a5feb660ffaff73b0816f7f34a 0.0s done
+#7 naming to docker.io/19901418/prt-oct-25th:latest done
+#7 unpacking to docker.io/19901418/prt-oct-25th:latest 0.0s done
+#7 DONE 0.2s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push Docker Image)
+[Pipeline] sh
++ docker login -u 19901418 --password-stdin
++ echo ****
+
+WARNING! Your credentials are stored unencrypted in '/var/lib/jenkins/.docker/config.json'.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/go/credential-store/
+
+Login Succeeded
++ docker push 19901418/prt-oct-25th:latest
+The push refers to repository [docker.io/19901418/prt-oct-25th]
+12b85cff06fd: Waiting
+d686072ed96b: Waiting
+44136fa355b3: Waiting
+7b229517ed22: Waiting
+26185d08a3ec: Layer already exists
+2ec5fb117ffa: Layer already exists
+9b0f7dfe35b2: Layer already exists
+eb211cadaad5: Waiting
+12b85cff06fd: Layer already exists
+44136fa355b3: Already exists
+7cc330898115: Layer already exists
+b9b388a21ecf: Layer already exists
+d686072ed96b: Waiting
+7b229517ed22: Layer already exists
+657023555a2a: Layer already exists
+eb211cadaad5: Waiting
+d686072ed96b: Pushed
+eb211cadaad5: Pushed
+latest: digest: sha256:93a91b83366342170b43f5e34679bea8909c92a5feb660ffaff73b0816f7f34a size: 856
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to Application Servers)
+[Pipeline] withCredentials
+Masking supported pattern matches of $SSH_KEY
+[Pipeline] {
+[Pipeline] sh
++ ssh -i **** -o StrictHostKeyChecking=no ubuntu@3.142.241.187 
+                            docker pull 19901418/prt-oct-25th:latest &&
+                            (docker stop prt-app || true) &&
+                            (docker rm prt-app || true) &&
+                            docker run -d --name prt-app                               -e DB_HOST=3.145.56.120                               -e DB_USER=olp_user                               -e DB_PASS=admin                               -e DB_NAME=olp_db                               -p 8000:80                               19901418/prt-oct-25th:latest
+                        
+latest: Pulling from 19901418/prt-oct-25th
+eb211cadaad5: Pulling fs layer
+44136fa355b3: Already exists
+d686072ed96b: Download complete
+eb211cadaad5: Download complete
+eb211cadaad5: Pull complete
+Digest: sha256:93a91b83366342170b43f5e34679bea8909c92a5feb660ffaff73b0816f7f34a
+Status: Downloaded newer image for 19901418/prt-oct-25th:latest
+docker.io/19901418/prt-oct-25th:latest
+prt-app
+prt-app
+2f748e537815faa4a2e0412c65f0a68fb1fc87f5624cf7bd5a58ac4a75b4ec25
++ ssh -i **** -o StrictHostKeyChecking=no ubuntu@3.148.215.92 
+                            docker pull 19901418/prt-oct-25th:latest &&
+                            (docker stop prt-app || true) &&
+                            (docker rm prt-app || true) &&
+                            docker run -d --name prt-app                               -e DB_HOST=3.145.56.120                               -e DB_USER=olp_user                               -e DB_PASS=admin                               -e DB_NAME=olp_db                               -p 8000:80                               19901418/prt-oct-25th:latest
+                        
+latest: Pulling from 19901418/prt-oct-25th
+eb211cadaad5: Pulling fs layer
+eb211cadaad5: Download complete
+44136fa355b3: Already exists
+eb211cadaad5: Pull complete
+d686072ed96b: Download complete
+Digest: sha256:93a91b83366342170b43f5e34679bea8909c92a5feb660ffaff73b0816f7f34a
+Status: Downloaded newer image for 19901418/prt-oct-25th:latest
+docker.io/19901418/prt-oct-25th:latest
+prt-app
+prt-app
+862f8941e9333fedf8f4e60f51ccfc1996bc1e968c2b82cae0e11fc0e3fde5a3
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Verify Deployment)
+[Pipeline] withCredentials
+Masking supported pattern matches of $SSH_KEY
+[Pipeline] {
+[Pipeline] sh
++ ssh -i **** -o StrictHostKeyChecking=no ubuntu@3.142.241.187 
+                            docker ps -a | grep prt-app &&
+                            docker exec prt-app env | grep DB_
+                        
+2f748e537815   19901418/prt-oct-25th:latest   "/docker-entrypoint.…"   2 seconds ago   Up 1 second   0.0.0.0:8000->80/tcp, [::]:8000->80/tcp   prt-app
+DB_PASS=admin
+DB_NAME=olp_db
+DB_HOST=3.145.56.120
+DB_USER=olp_user
++ ssh -i **** -o StrictHostKeyChecking=no ubuntu@3.148.215.92 
+                            docker ps -a | grep prt-app &&
+                            docker exec prt-app env | grep DB_
+                        
+862f8941e933   19901418/prt-oct-25th:latest   "/docker-entrypoint.…"   1 second ago   Up Less than a second   0.0.0.0:8000->80/tcp, [::]:8000->80/tcp   prt-app
+DB_NAME=olp_db
+DB_HOST=3.145.56.120
+DB_USER=olp_user
+DB_PASS=admin
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
